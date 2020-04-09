@@ -53,32 +53,31 @@ export default function MapView() {
     return regions.filter((region) => region.name === regionName)[0];
   };
 
-  useEffect(() => {
+  const createMap = (length, latitude, zoom) => {
     const map = new mapboxgl.Map({
       container: refMapContainer.current,
       style: "mapbox://styles/mapbox/light-v10",
-      center: [initialCenter.lng, initialCenter.lat],
-      zoom: initialCenter.zoom,
+      center: [length, latitude],
+      zoom,
       attributionControl: false,
-      maxZoom: 7.5,
-      minZoom: 4.3,
+      maxZoom: 9.5,
+      minZoom: 4,
     });
+
     map.addControl(
       new mapboxgl.AttributionControl({
         compact: true,
       })
     );
-    // map.scrollZoom.disable();
-    // map.dragPan.disable();
+
     map.touchZoomRotate.disable();
     map.dragRotate.disable();
     map.touchZoomRotate.disable();
     map.keyboard.disable();
-    map.doubleClickZoom.disable();
 
     let hoveredRegionId = null;
 
-    map.on("load", function () {
+    map.on("load", () => {
       map.addSource("regions", {
         type: "geojson",
         data:
@@ -114,9 +113,7 @@ export default function MapView() {
         },
       });
 
-      map.on("mousemove", "region-fills", function (e) {
-        map.getCanvas().style.cursor = "pointer";
-
+      map.on("mousemove", "region-fills", (e) => {
         if (e.features.length > 0) {
           if (hoveredRegionId) {
             map.setFeatureState(
@@ -136,7 +133,7 @@ export default function MapView() {
         }
       });
 
-      map.on("mouseleave", "region-fills", function () {
+      map.on("mouseleave", "region-fills", () => {
         if (hoveredRegionId) {
           map.setFeatureState(
             { source: "regions", id: hoveredRegionId },
@@ -149,6 +146,10 @@ export default function MapView() {
         map.getCanvas().style.cursor = "";
       });
     });
+  };
+
+  useEffect(() => {
+    createMap(initialCenter.lng, initialCenter.lat, initialCenter.zoom);
   }, []);
 
   return (
