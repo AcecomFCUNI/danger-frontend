@@ -9,12 +9,21 @@ import RegionsContext from "../context/RegionsContext";
 mapboxgl.accessToken = process.env.REACT_APP_TOKEN;
 
 const useStyles = makeStyles((theme) => ({
+  test: {
+    backgroundColor: "white",
+    position: "fixed",
+    zIndex: "3",
+    left: "0",
+    top: "0",
+    marginLeft: "20px",
+    marginTop: "20px",
+  },
   mapView: {
     width: "100vw",
     height: "100vh",
   },
   mapOverlay: {
-    position: "absolute",
+    position: "fixed",
     top: 0,
     left: 0,
     marginTop: "10px",
@@ -37,81 +46,88 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MapView() {
+  // const isMobile = false;
   const regions = useContext(RegionsContext);
   const classes = useStyles();
-
-  const refMapContainer = useRef(null);
   const [regionProperties, setRegionProperties] = useState(null);
-  const initialCenter = {
+  const refMapContainer = useRef(null);
+
+  const initialCenterDesktop = {
     lng: -74.9057793,
     lat: -8.8352268,
     zoom: 4.3,
+    bounds: [
+      [-87.0556640625, -22.43134015636061],
+      [-56.33789062499999, 5.441022303717974],
+    ],
   };
+
+  // const initialCenterMobile = {
+  //   lng: -74.9057793,
+  //   lat: -8.8352268,
+  //   zoom: 4.3,
+  //   bounds: [
+  //     [-87.0556640625, -22.43134015636061],
+  //     [-56.33789062499999, 5.441022303717974],
+  //   ],
+  // };
 
   // get data from my data and RestAPI in one object
   const getRegionProperties = (regionName) => {
     return regions.filter((region) => region.name === regionName)[0];
   };
 
-  const createMap = (length, latitude, zoom) => {
+  const createFlatMapDesktop = (reference) => {
     const map = new mapboxgl.Map({
-      container: refMapContainer.current,
+      container: reference.current,
       style: "mapbox://styles/mapbox/light-v10",
-      center: [length, latitude],
-      zoom,
+      center: [initialCenterDesktop.lng, initialCenterDesktop.lat],
+      zoom: initialCenterDesktop.zoom,
       attributionControl: false,
-      maxZoom: 9.5,
-      minZoom: 4,
+      maxBounds: initialCenterDesktop.bounds,
     });
 
-    map.addControl(
-      new mapboxgl.AttributionControl({
-        compact: true,
-      })
-    );
-
-    map.touchZoomRotate.disable();
+    // map.addControl(new mapboxgl.AttributionControl(), "bottom-left");
     map.dragRotate.disable();
-    map.touchZoomRotate.disable();
     map.keyboard.disable();
+    map.touchZoomRotate.disableRotation();
 
+    return map;
+  };
+
+  // const createFlatMapMobile = (reference) => {
+  //   const map = new mapboxgl.Map({
+  //     container: reference.current,
+  //     style: "mapbox://styles/mapbox/light-v10",
+  //     center: [initialCenterMobile.lng, initialCenterMobile.lat],
+  //     zoom: initialCenterMobile.zoom,
+  //     attributionControl: false,
+  //   });
+
+  //   // map.addControl(new mapboxgl.AttributionControl(), "bottom-left");
+  //   map.dragRotate.disable();
+  //   map.keyboard.disable();
+  //   map.touchZoomRotate.disableRotation();
+
+  //   return map;
+  // };
+
+  const loadFeaturesToMap = (reference) => {
+    // let map;
+    // if (isMobile) {
+    //   map = createFlatMapMobile(reference);
+    // } else {
+    //   map = createFlatMapDesktop(reference);
+    // }
+    const map = createFlatMapDesktop(reference);
     let hoveredRegionId = null;
-
     map.on("load", () => {
-      map.addSource("regions", {
-        type: "geojson",
-        data:
-          "https://raw.githubusercontent.com/BryanVe/regions-peru-geojson/master/peruRegions.geojson",
-      });
+      loadGeoJSONFile(
+        map,
+        "https://raw.githubusercontent.com/BryanVe/regions-peru-geojson/master/peruRegions.geojson"
+      );
 
-      // The feature-state dependent fill-opacity expression will render the hover effect
-      // when a feature's hover state is set to true.
-      map.addLayer({
-        id: "region-fills",
-        type: "fill",
-        source: "regions",
-        layout: {},
-        paint: {
-          "fill-color": "rgb(173, 173, 173)",
-          "fill-opacity": [
-            "case",
-            ["boolean", ["feature-state", "hover"], false],
-            0.5,
-            0.2,
-          ],
-        },
-      });
-
-      map.addLayer({
-        id: "region-borders",
-        type: "line",
-        source: "regions",
-        layout: {},
-        paint: {
-          "line-color": "rgb(173, 173, 173)",
-          "line-width": 2,
-        },
-      });
+      loadLayersToMap(map);
 
       map.on("mousemove", "region-fills", (e) => {
         if (e.features.length > 0) {
@@ -122,6 +138,7 @@ export default function MapView() {
             );
           }
           hoveredRegionId = e.features[0].id;
+
           setRegionProperties(
             getRegionProperties(e.features[0].properties.name)
           );
@@ -142,36 +159,88 @@ export default function MapView() {
         }
 
         hoveredRegionId = null;
-        setRegionProperties(null);
         map.getCanvas().style.cursor = "";
+        setRegionProperties(null);
       });
     });
   };
 
+  const loadGeoJSONFile = (map, urlToGeoJSON) => {
+    map.addSource("regions", {
+      type: "geojson",
+      data: urlToGeoJSON,
+    });
+  };
+
+  const loadLayersToMap = (map) => {
+    // layer that fills regions
+    map.addLayer({
+      id: "region-fills",
+      type: "fill",
+      source: "regions",
+      layout: {},
+      paint: {
+        "fill-color": "rgb(173, 173, 173)",
+        "fill-opacity": [
+          "case",
+          ["boolean", ["feature-state", "hover"], false],
+          0.5,
+          0.2,
+        ],
+      },
+    });
+
+    // layer that contains region borders
+    map.addLayer({
+      id: "region-borders",
+      type: "line",
+      source: "regions",
+      layout: {},
+      paint: {
+        "line-color": "rgb(173, 173, 173)",
+        "line-width": 2,
+      },
+    });
+  };
+
   useEffect(() => {
-    createMap(initialCenter.lng, initialCenter.lat, initialCenter.zoom);
+    loadFeaturesToMap(refMapContainer);
   }, []);
 
   return (
-    <div ref={refMapContainer} className={classes.mapView}>
-      <Card className={classes.mapOverlay}>
+    <React.Fragment>
+      <div ref={refMapContainer} className={classes.mapView}>
         {regionProperties ? (
-          <CardContent>
-            <Typography variant="h6" style={{ fontWeight: "bold" }}>
-              {regionProperties.name}
-            </Typography>
-            <Typography>Población: {regionProperties.population}</Typography>
-            <Typography>Casos confirmados: {regionProperties.cases}</Typography>
-            <Typography>Fallecidos: {regionProperties.deaths}</Typography>
-          </CardContent>
+          <Card className={classes.mapOverlay}>
+            <CardContent>
+              <Typography
+                style={{ fontWeight: "bold" }}
+                variant="h6"
+                className="notranslate"
+              >
+                {regionProperties.name}
+              </Typography>
+              <Typography variant="subtitle1" className="notranslate">
+                Población: {String(regionProperties.population)}
+              </Typography>
+              <Typography variant="subtitle1" className="notranslate">
+                Casos confirmados: {String(regionProperties.cases)}
+              </Typography>
+              <Typography variant="subtitle1" className="notranslate">
+                Fallecidos: {String(regionProperties.deaths)}
+              </Typography>
+            </CardContent>
+          </Card>
         ) : (
-          <CardContent>
-            <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
-              Coloque el cursor sobre una región :)
-            </Typography>
-          </CardContent>
+          <Card className={classes.mapOverlay}>
+            <CardContent>
+              <Typography style={{ fontWeight: "bold" }} variant="subtitle1">
+                Coloque el cursor sobre una región :)
+              </Typography>
+            </CardContent>
+          </Card>
         )}
-      </Card>
-    </div>
+      </div>
+    </React.Fragment>
   );
 }

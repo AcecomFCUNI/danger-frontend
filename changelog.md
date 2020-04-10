@@ -112,3 +112,10 @@
 
 - Updated:
   - Added a function that gets `currentDate`.
+
+## Version 2.2.0
+
+- Updated:
+  - Added a spinning loader.
+- Fixed:
+  - Map card information repaired.

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import Loader from "../components/Loader";
+
 // populationData
 import regionsPopulation from "../functions/regionsPopulation";
 
@@ -51,7 +53,7 @@ export function RegionsContextProvider({ children }) {
   }, []);
 
   if (loading) {
-    return <h2>Loading...</h2>;
+    return <Loader />;
   } else {
     if (!dataAPI.success) return <h2>Something went wrong :(</h2>;
     else {
