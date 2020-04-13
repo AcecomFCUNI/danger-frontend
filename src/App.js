@@ -1,17 +1,33 @@
 import React from "react";
+import { useTheme, useMediaQuery } from "@material-ui/core";
+
+import Dashboard from "./layouts/Dashboard";
+import MapViewDesktop from "./components/MapViewDesktop";
+import MapViewTablet from "./components/MapViewTablet";
+import MapViewMobile from "./components/MapViewMobile";
 
 import "./components/main.css";
 
-// import Statistics from "./components/Statistics";
-import MapView from "./components/MapView";
-import Dashboard from "./layouts/Dashboard";
+const App = () => {
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
 
-export default function App() {
   return (
     <React.Fragment>
       <Dashboard>
-        <MapView />
+        {isTablet ? (
+          isMobile ? (
+            <MapViewMobile />
+          ) : (
+            <MapViewTablet />
+          )
+        ) : (
+          <MapViewDesktop />
+        )}
       </Dashboard>
     </React.Fragment>
   );
-}
+};
+
+export default App;

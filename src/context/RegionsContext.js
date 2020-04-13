@@ -10,6 +10,7 @@ import getDataFromAPI from "../functions/getDataFromAPI";
 
 const RegionsContext = React.createContext();
 
+// mix localData and apiData
 const getRegions = (regionsPopulation, dataAPI) => {
   let regions = [];
 
@@ -30,8 +31,8 @@ const getRegions = (regionsPopulation, dataAPI) => {
   return regions;
 };
 
-export function RegionsContextProvider({ children }) {
-  const [dataAPI, setDataAPI] = useState({
+export const RegionsContextProvider = ({ children }) => {
+  const [regionsData, setRegionsData] = useState({
     regions: null,
     success: null,
     error: null,
@@ -42,12 +43,12 @@ export function RegionsContextProvider({ children }) {
     getDataFromAPI()
       .then((data) => {
         let regions = getRegions(regionsPopulation, data);
-        setDataAPI({ regions, success: true });
+        setRegionsData({ regions, success: true });
         setLoading(false);
       })
       .catch((error) => {
         console.error(error);
-        setDataAPI({ success: false });
+        setRegionsData({ success: false });
         setLoading(false);
       });
   }, []);
@@ -55,16 +56,16 @@ export function RegionsContextProvider({ children }) {
   if (loading) {
     return <Loader />;
   } else {
-    if (!dataAPI.success) return <h2>Something went wrong :(</h2>;
+    if (!regionsData.success) return <h2>Something went wrong :(</h2>;
     else {
       return (
-        <RegionsContext.Provider value={dataAPI.regions}>
+        <RegionsContext.Provider value={regionsData.regions}>
           {children}
         </RegionsContext.Provider>
       );
     }
   }
-}
+};
 
 export const RegionsContextConsumer = RegionsContext.Consumer;
 

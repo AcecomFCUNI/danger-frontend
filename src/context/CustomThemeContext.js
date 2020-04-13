@@ -1,16 +1,16 @@
 import React from "react";
 
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { green } from "@material-ui/core/colors";
+import { green, grey } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
-  status: {
+  colors: {
     green: green[300],
+    grey: grey[800],
+    softGrey: grey[300],
   },
 });
 
-const CustomThemeProvider = ({ children }) => {
+export const CustomThemeProvider = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
-
-export default CustomThemeProvider;

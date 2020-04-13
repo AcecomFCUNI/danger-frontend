@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Loader() {
+const Loader = () => {
   const classes = useStyles();
 
   return (
@@ -29,4 +29,6 @@ export default function Loader() {
       />
     </Grid>
   );
-}
+};
+
+export default Loader;

@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+
 import { Card, CardContent, Typography, Drawer } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -10,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     overflowY: "scroll",
     position: "fixed",
     right: 0,
-    zIndex: 1,
+    zIndex: 20,
     height: "100vh",
     [theme.breakpoints.up("md")]: {
       width: "30vw",
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Region({ name, population, cases, deaths }) {
+const Region = ({ name, population, cases, deaths }) => {
   return (
     <React.Fragment>
       <Typography variant="h6">{name}</Typography>
@@ -38,9 +39,9 @@ function Region({ name, population, cases, deaths }) {
       <Typography variant="subtitle1">Fallecidos: {deaths}</Typography>
     </React.Fragment>
   );
-}
+};
 
-export default function Sidebar() {
+const Sidebar = () => {
   const [stateRegion, setStateRegion] = useState({
     state: false,
     region: null,
@@ -52,30 +53,32 @@ export default function Sidebar() {
     <React.Fragment>
       <Card className={classes.sidebar}>
         <CardContent style={{ margin: 0, padding: 0 }}>
-          {regions.map(({ name, population, cases, deaths }) => (
-            <div
-              key={name}
-              className={classes.item}
-              onClick={() =>
-                setStateRegion({
-                  state: true,
-                  region: {
-                    name,
-                    population,
-                    cases,
-                    deaths,
-                  },
-                })
-              }
-            >
-              <Region
-                name={name}
-                population={population}
-                cases={cases}
-                deaths={deaths}
-              />
-            </div>
-          ))}
+          {regions
+            .sort((a, b) => b.cases - a.cases)
+            .map(({ name, population, cases, deaths }) => (
+              <div
+                key={name}
+                className={classes.item}
+                onClick={() =>
+                  setStateRegion({
+                    state: true,
+                    region: {
+                      name,
+                      population,
+                      cases,
+                      deaths,
+                    },
+                  })
+                }
+              >
+                <Region
+                  name={name}
+                  population={population}
+                  cases={cases}
+                  deaths={deaths}
+                />
+              </div>
+            ))}
           {stateRegion.state ? (
             <Drawer
               variant="temporary"
@@ -111,4 +114,6 @@ export default function Sidebar() {
       </Card>
     </React.Fragment>
   );
-}
+};
+
+export default Sidebar;

@@ -54,7 +54,7 @@ const createChart = (chartRef) => {
   });
 };
 
-export default function DrawerTest() {
+const DrawerTest = () => {
   const classes = useStyles();
   const chartRef = useRef();
 
@@ -63,4 +63,6 @@ export default function DrawerTest() {
   }, []);
 
   return <canvas ref={chartRef} className={classes.chart}></canvas>;
-}
+};
+
+export default DrawerTest;

@@ -9,68 +9,43 @@ import RegionsContext from "../context/RegionsContext";
 mapboxgl.accessToken = process.env.REACT_APP_TOKEN;
 
 const useStyles = makeStyles((theme) => ({
-  test: {
-    backgroundColor: "white",
-    position: "fixed",
-    zIndex: "3",
-    left: "0",
-    top: "0",
-    marginLeft: "20px",
-    marginTop: "20px",
-  },
   mapView: {
     width: "100vw",
     height: "100vh",
+    zIndex: 10,
   },
   mapOverlay: {
+    zIndex: 15,
     position: "fixed",
     top: 0,
     left: 0,
     marginTop: "10px",
     marginLeft: "10px",
     [theme.breakpoints.down("sm")]: {
-      marginTop: "73px",
-      marginLeft: "0",
-      marginRight: "10px",
+      marginBottom: "20px",
+      marginRight: "20px",
       right: 0,
+      bottom: 0,
       left: "auto",
-    },
-    [theme.breakpoints.down("xs")]: {
-      marginTop: "65px",
-      marginLeft: "0",
-      marginRight: "10px",
-      right: 0,
-      left: "auto",
+      top: "auto",
     },
   },
 }));
 
-export default function MapView() {
-  // const isMobile = false;
+const MapViewDesktop = () => {
   const regions = useContext(RegionsContext);
   const classes = useStyles();
   const [regionProperties, setRegionProperties] = useState(null);
   const refMapContainer = useRef(null);
-
   const initialCenterDesktop = {
-    lng: -74.9057793,
-    lat: -8.8352268,
-    zoom: 4.3,
+    lng: -71.57617187499999,
+    lat: -9.267918002363107,
+    zoom: 4.8,
     bounds: [
-      [-87.0556640625, -22.43134015636061],
-      [-56.33789062499999, 5.441022303717974],
+      [-90.87890625, -24.861498734372553],
+      [-51.328125, 3.6888551431470478],
     ],
   };
-
-  // const initialCenterMobile = {
-  //   lng: -74.9057793,
-  //   lat: -8.8352268,
-  //   zoom: 4.3,
-  //   bounds: [
-  //     [-87.0556640625, -22.43134015636061],
-  //     [-56.33789062499999, 5.441022303717974],
-  //   ],
-  // };
 
   // get data from my data and RestAPI in one object
   const getRegionProperties = (regionName) => {
@@ -80,11 +55,12 @@ export default function MapView() {
   const createFlatMapDesktop = (reference) => {
     const map = new mapboxgl.Map({
       container: reference.current,
-      style: "mapbox://styles/mapbox/light-v10",
+      style: "mapbox://styles/mapbox/light-v10?optimize=true",
       center: [initialCenterDesktop.lng, initialCenterDesktop.lat],
       zoom: initialCenterDesktop.zoom,
       attributionControl: false,
       maxBounds: initialCenterDesktop.bounds,
+      maxZoom: 11,
     });
 
     // map.addControl(new mapboxgl.AttributionControl(), "bottom-left");
@@ -95,30 +71,7 @@ export default function MapView() {
     return map;
   };
 
-  // const createFlatMapMobile = (reference) => {
-  //   const map = new mapboxgl.Map({
-  //     container: reference.current,
-  //     style: "mapbox://styles/mapbox/light-v10",
-  //     center: [initialCenterMobile.lng, initialCenterMobile.lat],
-  //     zoom: initialCenterMobile.zoom,
-  //     attributionControl: false,
-  //   });
-
-  //   // map.addControl(new mapboxgl.AttributionControl(), "bottom-left");
-  //   map.dragRotate.disable();
-  //   map.keyboard.disable();
-  //   map.touchZoomRotate.disableRotation();
-
-  //   return map;
-  // };
-
   const loadFeaturesToMap = (reference) => {
-    // let map;
-    // if (isMobile) {
-    //   map = createFlatMapMobile(reference);
-    // } else {
-    //   map = createFlatMapDesktop(reference);
-    // }
     const map = createFlatMapDesktop(reference);
     let hoveredRegionId = null;
     map.on("load", () => {
@@ -243,4 +196,6 @@ export default function MapView() {
       </div>
     </React.Fragment>
   );
-}
+};
+
+export default MapViewDesktop;

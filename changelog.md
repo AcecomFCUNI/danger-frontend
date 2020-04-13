@@ -119,3 +119,14 @@
   - Added a spinning loader.
 - Fixed:
   - Map card information repaired.
+
+## Version 2.3.0
+
+- Updated:
+  - AppBar was customized.
+  - Appbar input field shows all regions.
+  - Button with the Peru icon displays total data.
+  - Data per region can be displayed.
+  - Cases per region are sorted in descending order.
+- Fixed:
+  - Map viewport for any device repaired.

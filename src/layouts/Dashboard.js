@@ -1,17 +1,23 @@
 import React from "react";
-import AppBar from "../components/AppBar";
+
 import { useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
-import Sidebar from "../components/Sidebar";
 
-export default function Dashboard({ children, regions }) {
+import Sidebar from "../components/Sidebar";
+import CustomAppBar from "../components/CustomAppBar";
+
+import { DropdownContextProvider } from "../context/DropdownContext";
+
+const Dashboard = ({ children }) => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <React.Fragment>
-      {matches ? <AppBar /> : <Sidebar />}
+    <DropdownContextProvider>
+      {mobile ? <CustomAppBar /> : <Sidebar />}
       {children}
-    </React.Fragment>
+    </DropdownContextProvider>
   );
-}
+};
+
+export default Dashboard;
