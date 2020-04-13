@@ -136,3 +136,8 @@
 - Updated:
   - Appbar input field already works.
   - The endpoints have been updated to post method.
+
+## Version 2.4.0a
+
+- Hotfix:
+  - Deaths field repaired.

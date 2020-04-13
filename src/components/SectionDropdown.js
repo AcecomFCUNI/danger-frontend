@@ -116,7 +116,7 @@ const SectionDropdown = ({ stringToSearch, defaultOpen }) => {
                   sectionTitle="MUERTOS"
                   sectionContent={
                     dataToShow[dataToShow.length - 1].totalDeaths ||
-                    dataToShow[dataToShow.length - 1].data.totalCases
+                    dataToShow[dataToShow.length - 1].data.totalDeaths
                   }
                 />
               </React.Fragment>
