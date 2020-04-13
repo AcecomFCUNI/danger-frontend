@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import RegionsContext from "../context/RegionsContext";
 import RegionCard from "./RegionCard";
 
-import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,20 +34,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DisplayAllRegions = () => {
+const DisplayAllRegions = ({ appBarInput }) => {
   const regions = useContext(RegionsContext);
   const classes = useStyles();
   const lastItem = regions[regions.length - 1].name;
+
   return (
     <div className={classes.dropDownBack}>
-      <Card className={classes.topSpace} />
+      <div className={classes.topSpace} />
       {regions
-        .sort((a, b) => b.cases - a.cases)
-        .map(({ name, cases }) => (
+        .filter(
+          (item) =>
+            item.name.toLowerCase().indexOf(appBarInput.toLowerCase()) > -1
+        )
+        .sort((a, b) => b.totalCases - a.totalCases)
+        .map(({ name, totalCases }) => (
           <RegionCard
             key={name}
             name={name}
-            cases={cases}
+            cases={totalCases}
             lastItem={lastItem}
           />
         ))}

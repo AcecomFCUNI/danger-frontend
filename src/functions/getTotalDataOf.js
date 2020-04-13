@@ -6,13 +6,26 @@ const axios = require("axios");
 
 const getTotalDataOf = async (nameTotalData) => {
   try {
-    const { data } = await axios.get(
-      `/totalData/${nameTotalData.toLowerCase()}`
-    );
+    const { data } = await axios.post("/totalData", {
+      args: {
+        name: nameTotalData.toLowerCase(),
+      },
+    });
     return data;
   } catch (error) {
     throw new Error(error.message);
   }
 };
+
+// const getTotalDataOf = async (nameTotalData) => {
+//   try {
+//     const { data } = await axios.get(
+//       `/totalData/${nameTotalData.toLowerCase()}`
+//     );
+//     return data;
+//   } catch (error) {
+//     throw new Error(error.message);
+//   }
+// };
 
 export default getTotalDataOf;

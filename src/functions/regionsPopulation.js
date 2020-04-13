@@ -1,102 +1,102 @@
 module.exports = [
   {
     name: "AMAZONAS",
-    population: 375993,
+    totalPopulation: 375993,
   },
   {
     name: "ANCASH",
-    population: 1063459,
+    totalPopulation: 1063459,
   },
   {
     name: "APURIMAC",
-    population: 404190,
+    totalPopulation: 404190,
   },
   {
     name: "AREQUIPA",
-    population: 1152303,
+    totalPopulation: 1152303,
   },
   {
     name: "AYACUCHO",
-    population: 612489,
+    totalPopulation: 612489,
   },
   {
     name: "CAJAMARCA",
-    population: 1387809,
+    totalPopulation: 1387809,
   },
   {
     name: "CALLAO",
-    population: 879679,
+    totalPopulation: 879679,
   },
   {
     name: "CUSCO",
-    population: 1171403,
+    totalPopulation: 1171403,
   },
   {
     name: "HUANCAVELICA",
-    population: 454797,
+    totalPopulation: 454797,
   },
   {
     name: "HUANUCO",
-    population: 762223,
+    totalPopulation: 762223,
   },
   {
     name: "ICA",
-    population: 711932,
+    totalPopulation: 711932,
   },
   {
     name: "JUNIN",
-    population: 1225474,
+    totalPopulation: 1225474,
   },
   {
     name: "LA LIBERTAD",
-    population: 1617050,
+    totalPopulation: 1617050,
   },
   {
     name: "LAMBAYEQUE",
-    population: 1112868,
+    totalPopulation: 1112868,
   },
   {
     name: "LIMA",
-    population: 8442409,
+    totalPopulation: 8442409,
   },
   {
     name: "LORETO",
-    population: 891732,
+    totalPopulation: 891732,
   },
   {
     name: "MADRE DE DIOS",
-    population: 109555,
+    totalPopulation: 109555,
   },
   {
     name: "MOQUEGUA",
-    population: 161533,
+    totalPopulation: 161533,
   },
   {
     name: "PASCO",
-    population: 280449,
+    totalPopulation: 280449,
   },
   {
     name: "PIURA",
-    population: 1676315,
+    totalPopulation: 1676315,
   },
   {
     name: "PUNO",
-    population: 1268441,
+    totalPopulation: 1268441,
   },
   {
     name: "SAN MARTIN",
-    population: 728808,
+    totalPopulation: 728808,
   },
   {
     name: "TACNA",
-    population: 288781,
+    totalPopulation: 288781,
   },
   {
     name: "TUMBES",
-    population: 200306,
+    totalPopulation: 200306,
   },
   {
     name: "UCAYALI",
-    population: 432159,
+    totalPopulation: 432159,
   },
 ];

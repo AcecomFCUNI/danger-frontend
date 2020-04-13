@@ -92,28 +92,22 @@ const SectionDropdown = ({ stringToSearch, defaultOpen }) => {
                 <CardSection
                   sectionTitle="CASOS TOTALES"
                   sectionContent={
-                    dataToShow.message.data[dataToShow.message.data.length - 1]
-                      .totalCases ||
-                    dataToShow.message.data[dataToShow.message.data.length - 1]
-                      .data.cases
+                    dataToShow[dataToShow.length - 1].totalCases ||
+                    dataToShow[dataToShow.length - 1].data.totalCases
                   }
                 />
-                {stringToSearch.toUpperCase() === "PERU" ? (
+                {stringToSearch.toLowerCase() === "peru" ? (
                   <React.Fragment>
                     <CardSection
                       sectionTitle="DESCARTADOS"
                       sectionContent={
-                        dataToShow.message.data[
-                          dataToShow.message.data.length - 1
-                        ].totalDiscarded
+                        dataToShow[dataToShow.length - 1].totalDiscarded
                       }
                     />
                     <CardSection
                       sectionTitle="RECUPERADOS"
                       sectionContent={
-                        dataToShow.message.data[
-                          dataToShow.message.data.length - 1
-                        ].totalRecovered
+                        dataToShow[dataToShow.length - 1].totalRecovered
                       }
                     />
                   </React.Fragment>
@@ -121,10 +115,8 @@ const SectionDropdown = ({ stringToSearch, defaultOpen }) => {
                 <CardSection
                   sectionTitle="MUERTOS"
                   sectionContent={
-                    dataToShow.message.data[dataToShow.message.data.length - 1]
-                      .totalDeaths ||
-                    dataToShow.message.data[dataToShow.message.data.length - 1]
-                      .data.deaths
+                    dataToShow[dataToShow.length - 1].totalDeaths ||
+                    dataToShow[dataToShow.length - 1].data.totalCases
                   }
                 />
               </React.Fragment>

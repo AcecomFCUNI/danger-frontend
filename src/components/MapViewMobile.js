@@ -174,13 +174,13 @@ const MapViewMobile = () => {
                 {regionProperties.name}
               </Typography>
               <Typography variant="subtitle1" className="notranslate">
-                Población: {String(regionProperties.population)}
+                Población: {String(regionProperties.totalPopulation)}
               </Typography>
               <Typography variant="subtitle1" className="notranslate">
-                Casos confirmados: {String(regionProperties.cases)}
+                Casos confirmados: {String(regionProperties.totalCases)}
               </Typography>
               <Typography variant="subtitle1" className="notranslate">
-                Fallecidos: {String(regionProperties.deaths)}
+                Fallecidos: {String(regionProperties.totalDeaths)}
               </Typography>
             </CardContent>
           </Card>

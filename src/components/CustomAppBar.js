@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   AppBar,
@@ -45,13 +45,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomAppBar = () => {
   const classes = useStyles();
-  const { setRegionToShow } = useContext(DropdownContext);
-  const [isOpen, setIsOpen] = useState(false);
   const [onEditInput, setOnEditInput] = useState(false);
-
-  useEffect(() => {
-    setIsOpen(false);
-  }, [isOpen]);
+  const { setRegionToShow } = useContext(DropdownContext);
+  const [appBarInput, setAppBarInput] = useState("");
 
   return (
     <React.Fragment>
@@ -63,7 +59,10 @@ const CustomAppBar = () => {
               className={classes.menuButton}
               color="inherit"
               aria-label="open drawer"
-              onClick={() => setOnEditInput(false)}
+              onClick={() => {
+                setAppBarInput("");
+                setOnEditInput(false);
+              }}
             >
               <ChevronLeftIcon />
             </IconButton>
@@ -80,8 +79,10 @@ const CustomAppBar = () => {
 
           <div className={classes.search}>
             <InputBase
+              value={appBarInput}
               style={{ width: "100%" }}
               onClick={() => setOnEditInput(true)}
+              onChange={(event) => setAppBarInput(event.target.value)}
               placeholder="Buscar región..."
               inputProps={{ "aria-label": "region-search" }}
             />
@@ -103,7 +104,7 @@ const CustomAppBar = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      {onEditInput ? <DisplayAllRegions /> : null}
+      {onEditInput ? <DisplayAllRegions appBarInput={appBarInput} /> : null}
     </React.Fragment>
   );
 };

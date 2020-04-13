@@ -54,8 +54,8 @@ const Sidebar = () => {
       <Card className={classes.sidebar}>
         <CardContent style={{ margin: 0, padding: 0 }}>
           {regions
-            .sort((a, b) => b.cases - a.cases)
-            .map(({ name, population, cases, deaths }) => (
+            .sort((a, b) => b.totalCases - a.totalCases)
+            .map(({ name, totalPopulation, totalCases, totalDeaths }) => (
               <div
                 key={name}
                 className={classes.item}
@@ -64,18 +64,18 @@ const Sidebar = () => {
                     state: true,
                     region: {
                       name,
-                      population,
-                      cases,
-                      deaths,
+                      totalPopulation,
+                      totalCases,
+                      totalDeaths,
                     },
                   })
                 }
               >
                 <Region
                   name={name}
-                  population={population}
-                  cases={cases}
-                  deaths={deaths}
+                  population={totalPopulation}
+                  cases={totalCases}
+                  deaths={totalDeaths}
                 />
               </div>
             ))}
@@ -97,13 +97,13 @@ const Sidebar = () => {
                     {stateRegion.region.name}
                   </Typography>
                   <Typography variant="subtitle1">
-                    Población: {stateRegion.region.population}
+                    Población: {stateRegion.region.totalPopulation}
                   </Typography>
                   <Typography variant="subtitle1">
-                    Casos confirmados: {stateRegion.region.cases}
+                    Casos confirmados: {stateRegion.region.totalCases}
                   </Typography>
                   <Typography variant="subtitle1">
-                    Fallecidos: {stateRegion.region.deaths}
+                    Fallecidos: {stateRegion.region.totalDeaths}
                   </Typography>
                 </CardContent>
               </Card>

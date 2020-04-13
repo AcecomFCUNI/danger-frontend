@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 // axios.defaults.baseURL = "http://localhost:4000/api/covid/peru";
-axios.defaults.baseURL = "https://acecom-danger.herokuapp.com/api/covid/peru";
+axios.defaults.baseURL = "https://acecom-danger.herokuapp.com";
 
 const getCurrentDate = async () => {
   try {
@@ -12,15 +12,19 @@ const getCurrentDate = async () => {
     } = await axios.get("/currentDate");
     return currentDate;
   } catch (error) {
-    throw new Error("An error occurred requesting current date");
+    throw new Error(error.message);
   }
 };
 
 const getDataFromAPI = async () => {
   try {
     const currentDate = await getCurrentDate();
-    const { data } = await axios.get(`/${currentDate}`);
-    return data.message.departments[0].departments;
+    const { data } = await axios.post("/dataPerDay", {
+      args: {
+        date: currentDate,
+      },
+    });
+    return data.message.departmentsData.departments;
   } catch (error) {
     throw new Error(error.message);
   }

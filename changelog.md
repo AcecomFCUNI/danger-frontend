@@ -130,3 +130,9 @@
   - Cases per region are sorted in descending order.
 - Fixed:
   - Map viewport for any device repaired.
+
+## Version 2.4.0
+
+- Updated:
+  - Appbar input field already works.
+  - The endpoints have been updated to post method.
