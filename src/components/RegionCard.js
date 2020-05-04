@@ -1,44 +1,38 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import DropdownContext from "../context/DropdownContext";
+import { useDispatch } from "react-redux";
+import { searchRegionRequested, handleDrawer } from "../actions";
+import { formatNumber } from "../functions/Utils";
 
 const useStyles = makeStyles((theme) => ({
   regionCard: {
-    backgroundColor: "#F3F3F3",
-    overflowY: "scroll",
+    backgroundColor: theme.colors.background,
     paddingRight: theme.spacing(4),
     paddingLeft: theme.spacing(4),
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
 
     "&:hover": {
-      backgroundColor: "#CBF2DB",
+      backgroundColor: "#DAF0EE",
       cursor: "pointer",
     },
   },
-  lastRegionCard: {
-    backgroundColor: "#F3F3F3",
-    overflowY: "scroll",
-    padding: theme.spacing(2),
-    marginBottom: "200px",
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
-    "&:hover": {
-      backgroundColor: "#CBF2DB",
-      cursor: "pointer",
-    },
+  titleRegion: {
+    color: theme.colors.fontSubtitle,
+  },
+  casesIndicator: {
+    borderRadius: 4,
+    backgroundColor: theme.colors.casesIndicator,
   },
 }));
 
-const RegionCard = ({ name, cases, lastItem }) => {
+const RegionCard = ({ name, cases, isMobile }) => {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [showRegion, setShowRegion] = useState(false);
-  const { setRegionToShow } = useContext(DropdownContext);
 
   useEffect(() => {
     setShowRegion(false);
@@ -47,16 +41,14 @@ const RegionCard = ({ name, cases, lastItem }) => {
   return (
     <React.Fragment>
       <div
-        onClick={() => setRegionToShow({ stringToSearch: name, isOpen: true })}
+        onClick={() => {
+          dispatch(searchRegionRequested(name));
+          dispatch(handleDrawer());
+        }}
       >
-        <Grid
-          container
-          className={
-            name === lastItem ? classes.lastRegionCard : classes.regionCard
-          }
-        >
+        <Grid container className={classes.regionCard}>
           <Grid item xs={9} container justify="flex-start">
-            <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
+            <Typography variant="subtitle1" className={classes.titleRegion}>
               {name}
             </Typography>
           </Grid>
@@ -65,13 +57,13 @@ const RegionCard = ({ name, cases, lastItem }) => {
             xs={3}
             container
             justify="center"
-            style={{ backgroundColor: "tomato", borderRadius: "4px" }}
+            className={classes.casesIndicator}
           >
             <Typography
               variant="subtitle1"
               style={{ color: "white", fontWeight: "bold" }}
             >
-              {cases}
+              {formatNumber(cases)}
             </Typography>
           </Grid>
         </Grid>

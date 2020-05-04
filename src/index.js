@@ -1,15 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-
-import { RegionsContextProvider } from "../src/context/RegionsContext";
+import { Provider } from "react-redux";
 import { CustomThemeProvider } from "../src/context/CustomThemeContext";
+import configureStore from "./store";
+import App from "./App";
+import "./index.css";
+
+const store = configureStore();
 
 ReactDOM.render(
-  <CustomThemeProvider>
-    <RegionsContextProvider>
+  <Provider store={store}>
+    <CustomThemeProvider>
       <App />
-    </RegionsContextProvider>
-  </CustomThemeProvider>,
+    </CustomThemeProvider>
+  </Provider>,
   document.getElementById("root")
 );

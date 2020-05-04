@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import mapboxgl from "mapbox-gl";
 
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent, Typography, CardHeader } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
 
-import RegionsContext from "../context/RegionsContext";
+import { formatNumber } from "../functions/Utils";
 
 mapboxgl.accessToken = process.env.REACT_APP_TOKEN;
 
@@ -15,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 10,
   },
   mapOverlay: {
+    backgroundColor: "#3A3A3A",
+    color: "#FFF",
     zIndex: 15,
     position: "fixed",
     top: 0,
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MapViewDesktop = () => {
-  const regions = useContext(RegionsContext);
+  const regions = useSelector((state) => state.allRegions.regions);
   const classes = useStyles();
   const [regionProperties, setRegionProperties] = useState(null);
   const refMapContainer = useRef(null);
@@ -63,7 +66,6 @@ const MapViewDesktop = () => {
       maxZoom: 11,
     });
 
-    // map.addControl(new mapboxgl.AttributionControl(), "bottom-left");
     map.dragRotate.disable();
     map.keyboard.disable();
     map.touchZoomRotate.disableRotation();
@@ -133,7 +135,7 @@ const MapViewDesktop = () => {
       source: "regions",
       layout: {},
       paint: {
-        "fill-color": "rgb(173, 173, 173)",
+        "fill-color": "#939393",
         "fill-opacity": [
           "case",
           ["boolean", ["feature-state", "hover"], false],
@@ -150,7 +152,7 @@ const MapViewDesktop = () => {
       source: "regions",
       layout: {},
       paint: {
-        "line-color": "rgb(173, 173, 173)",
+        "line-color": "#939393",
         "line-width": 2,
       },
     });
@@ -163,36 +165,38 @@ const MapViewDesktop = () => {
   return (
     <React.Fragment>
       <div ref={refMapContainer} className={classes.mapView}>
-        {regionProperties ? (
-          <Card className={classes.mapOverlay}>
-            <CardContent>
-              <Typography
-                style={{ fontWeight: "bold" }}
-                variant="h6"
-                className="notranslate"
-              >
-                {regionProperties.name}
-              </Typography>
-              <Typography variant="subtitle1" className="notranslate">
-                Población: {String(regionProperties.totalPopulation)}
-              </Typography>
-              <Typography variant="subtitle1" className="notranslate">
-                Casos confirmados: {String(regionProperties.totalCases)}
-              </Typography>
-              <Typography variant="subtitle1" className="notranslate">
-                Fallecidos: {String(regionProperties.totalDeaths)}
-              </Typography>
-            </CardContent>
-          </Card>
-        ) : (
-          <Card className={classes.mapOverlay}>
-            <CardContent>
+        <Card elevation={0} className={classes.mapOverlay}>
+          {regionProperties ? (
+            <React.Fragment>
+              <CardHeader
+                style={{ padding: "20px 15px 0 15px", textAlign: "center" }}
+                title={regionProperties.name}
+                titleTypographyProps={{
+                  style: { fontWeight: "bold" },
+                  variant: "h6",
+                  className: "notranslate",
+                }}
+              />
+              <CardContent style={{ padding: "0 15px 20px 15px" }}>
+                <Typography variant="subtitle1" className="notranslate">
+                  Población: {formatNumber(regionProperties.totalPopulation)}
+                </Typography>
+                <Typography variant="subtitle1" className="notranslate">
+                  Casos confirmados: {formatNumber(regionProperties.totalCases)}
+                </Typography>
+                <Typography variant="subtitle1" className="notranslate">
+                  Fallecidos: {formatNumber(regionProperties.totalDeaths)}
+                </Typography>
+              </CardContent>
+            </React.Fragment>
+          ) : (
+            <CardContent style={{ padding: "20px 15px" }}>
               <Typography style={{ fontWeight: "bold" }} variant="subtitle1">
                 Coloque el cursor sobre una región :)
               </Typography>
             </CardContent>
-          </Card>
-        )}
+          )}
+        </Card>
       </div>
     </React.Fragment>
   );

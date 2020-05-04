@@ -1,13 +1,15 @@
 import React from "react";
 
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { green, grey } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   colors: {
-    green: green[300],
-    grey: grey[800],
-    softGrey: grey[300],
+    background: "#E7E7E7",
+    fontTitle: "#484947",
+    casesIndicator: "#CF5252",
+    fontSubtitle: "#30312f",
+    totalCasesButton: "#249B9F",
+    totalCasesButtonHover: "#31a5a9",
   },
 });
 
