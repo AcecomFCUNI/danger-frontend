@@ -148,3 +148,8 @@
   - Added custom colors.
   - Added an search input field to sidebar.
   - In desktop mode the bottom drawer shows info and statistics by date of each region. In mobile mode the dropdown section does the same thing.
+
+## Version 2.5.0a
+
+- Hotfix:
+  - Statistic charts repaired.

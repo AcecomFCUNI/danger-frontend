@@ -5,12 +5,12 @@ import { Post } from "../functions/Request";
 
 function* fetchRegion(action) {
   try {
-    const data = yield call(Post, "/totalData", {
+    const { message } = yield call(Post, "/totalData", {
       args: {
         name: action.payload.toLowerCase(),
       },
     });
-    yield put(searchRegionSucceeded(data));
+    yield put(searchRegionSucceeded(message));
   } catch (error) {
     yield put(searchRegionFailed(error.message));
   }
