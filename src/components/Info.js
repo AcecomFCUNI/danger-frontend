@@ -17,7 +17,7 @@ const Info = ({ chartHeight = "300px" }) => {
     (region) => region.name.toLowerCase() === name.toLowerCase()
   );
   let lastData = {};
-  if (name.toLowerCase() === "peru") lastData = peru;
+  if (name.toLowerCase() === "perú") lastData = peru;
   else lastData = region;
 
   return (
@@ -53,7 +53,7 @@ const Info = ({ chartHeight = "300px" }) => {
                 sectionContent={lastData.totalDeaths}
               />
             </Grid>
-            {name.toLowerCase() === "peru" ? (
+            {name.toLowerCase() === "perú" ? (
               <Grid container item>
                 <CardSection
                   backgroundColor="#DAA753"

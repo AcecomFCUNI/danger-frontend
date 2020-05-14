@@ -15,7 +15,6 @@ function* fetchAllRegions() {
       },
     });
     const regions = addPopulationToData(message.departmentsData.departments);
-
     yield put(fetchAllRegionsSucceeded(message.totalData, regions));
   } catch (error) {
     yield put(fetchAllRegionsFailed(error.message));

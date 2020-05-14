@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useTheme, useMediaQuery } from "@material-ui/core";
 import MapViewDesktop from "./components/MapViewDesktop";
-import MapViewTablet from "./components/MapViewTablet";
-import MapViewMobile from "./components/MapViewMobile";
+// import MapViewTablet from "./components/MapViewTablet";
+// import MapViewMobile from "./components/MapViewMobile";
 import { fetchAllRegionsRequested } from "./actions";
 import { useDispatch, useSelector } from "react-redux";
 import { DesktopLayout, MobileLayout } from "./layouts";

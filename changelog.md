@@ -153,3 +153,8 @@
 
 - Hotfix:
   - Statistic charts repaired.
+
+## Version 2.5.0b
+
+- Hotfix:
+  - Accent marks added to the regions.

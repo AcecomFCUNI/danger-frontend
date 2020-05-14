@@ -4,11 +4,11 @@ export const populationByRegion = [
     totalPopulation: 375993,
   },
   {
-    name: "ANCASH",
+    name: "ÁNCASH",
     totalPopulation: 1063459,
   },
   {
-    name: "APURIMAC",
+    name: "APURÍMAC",
     totalPopulation: 404190,
   },
   {
@@ -36,7 +36,7 @@ export const populationByRegion = [
     totalPopulation: 454797,
   },
   {
-    name: "HUANUCO",
+    name: "HUÁNUCO",
     totalPopulation: 762223,
   },
   {
@@ -44,7 +44,7 @@ export const populationByRegion = [
     totalPopulation: 711932,
   },
   {
-    name: "JUNIN",
+    name: "JUNÍN",
     totalPopulation: 1225474,
   },
   {
@@ -84,7 +84,7 @@ export const populationByRegion = [
     totalPopulation: 1268441,
   },
   {
-    name: "SAN MARTIN",
+    name: "SAN MARTÍN",
     totalPopulation: 728808,
   },
   {
@@ -105,9 +105,6 @@ export const addPopulationToData = (regions) => {
   return populationByRegion.map((region) => {
     return {
       ...region,
-      // default data
-      totalCases: 0,
-      totalDeaths: 0,
 
       // overwrite default with API data
       ...regions.filter((department) => department.name === region.name)[0],

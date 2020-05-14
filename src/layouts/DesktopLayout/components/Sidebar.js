@@ -74,7 +74,7 @@ const Sidebar = () => {
         </Typography>
         <Button
           onClick={() => {
-            dispatch(searchRegionRequested("peru"));
+            dispatch(searchRegionRequested("perú"));
             dispatch(handleDrawer());
           }}
           variant="contained"

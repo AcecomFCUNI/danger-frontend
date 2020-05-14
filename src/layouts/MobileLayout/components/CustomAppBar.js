@@ -93,7 +93,7 @@ const CustomAppBar = () => {
             edge="end"
             aria-label="mostrar datos totales"
             onClick={() => {
-              dispatch(searchRegionRequested("PERU"));
+              dispatch(searchRegionRequested("perú"));
               dispatch(handleDrawer());
             }}
             color="inherit"
