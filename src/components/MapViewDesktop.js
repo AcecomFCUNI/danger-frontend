@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useSelector } from "react-redux";
 
 import { formatNumber } from "../functions/Utils";
+import logoUNI from "../images/uni.png";
 
 mapboxgl.accessToken = process.env.REACT_APP_TOKEN;
 
@@ -32,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
       left: "auto",
       top: "auto",
     },
+  },
+  uni: {
+    marginRight: "5px",
+    height: "40px",
   },
 }));
 
@@ -190,9 +195,16 @@ const MapViewDesktop = () => {
               </CardContent>
             </React.Fragment>
           ) : (
-            <CardContent style={{ padding: "20px 15px" }}>
+            <CardContent
+              style={{
+                padding: "20px 15px",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <img alt="logoUNI" src={logoUNI} className={classes.uni} />
               <Typography style={{ fontWeight: "bold" }} variant="subtitle1">
-                Coloque el cursor sobre una región :)
+                Coloque el cursor sobre una región{" "}
               </Typography>
             </CardContent>
           )}

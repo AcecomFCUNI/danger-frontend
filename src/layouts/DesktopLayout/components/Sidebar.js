@@ -13,7 +13,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import AllRegions from "../../../components/AllRegions";
 import { useDispatch, useSelector } from "react-redux";
 
-import { handleDrawer, searchRegionRequested } from "../../../actions";
+import {
+  handleDrawer,
+  searchRegionRequested,
+  dataInEachDayRequested,
+} from "../../../actions";
 import { formatNumber } from "../../../functions/Utils";
 
 const headerSidebarSize = 200;
@@ -75,6 +79,7 @@ const Sidebar = () => {
         <Button
           onClick={() => {
             dispatch(searchRegionRequested("perú"));
+            dispatch(dataInEachDayRequested("perú"));
             dispatch(handleDrawer());
           }}
           variant="contained"

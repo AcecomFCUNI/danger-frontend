@@ -4,7 +4,11 @@ import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { useDispatch } from "react-redux";
-import { searchRegionRequested, handleDrawer } from "../actions";
+import {
+  searchRegionRequested,
+  handleDrawer,
+  dataInEachDayRequested,
+} from "../actions";
 import { formatNumber } from "../functions/Utils";
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +47,7 @@ const RegionCard = ({ name, cases, isMobile }) => {
       <div
         onClick={() => {
           dispatch(searchRegionRequested(name));
+          dispatch(dataInEachDayRequested(name));
           dispatch(handleDrawer());
         }}
       >

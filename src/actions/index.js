@@ -11,6 +11,12 @@ import {
   searchRegionClean,
 } from "./searchRegion";
 
+import {
+  dataInEachDayFailed,
+  dataInEachDaySucceeded,
+  dataInEachDayRequested,
+} from "./dataInEachDay";
+
 import { handleDrawer } from "./handleDrawer";
 
 export {
@@ -21,5 +27,8 @@ export {
   searchRegionFailed,
   searchRegionRequested,
   searchRegionSucceeded,
+  dataInEachDayFailed,
+  dataInEachDaySucceeded,
+  dataInEachDayRequested,
   handleDrawer,
 };

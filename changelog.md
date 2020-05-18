@@ -158,3 +158,9 @@
 
 - Hotfix:
   - Accent marks added to the regions.
+
+## Version 2.6.0
+
+- Updated:
+  - Added bar charts for cases, deaths, recovered and discarded
+  - Added Acecom favicon.

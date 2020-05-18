@@ -22,6 +22,9 @@ const DrawerBottom = () => {
   const classes = useStyles();
   const desktop = useSelector((state) => state.handleDrawer);
   const { loading } = useSelector((state) => state.regionSearched);
+  const { loading: loadingInEach } = useSelector(
+    (state) => state.dataPerRegionInEachDay
+  );
   const dispatch = useDispatch();
 
   return (
@@ -35,7 +38,7 @@ const DrawerBottom = () => {
       }}
     >
       <div className={classes.drawerContent}>
-        {loading ? (
+        {loading || loadingInEach ? (
           <Loader />
         ) : (
           <div

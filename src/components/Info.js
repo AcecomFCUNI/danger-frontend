@@ -6,7 +6,8 @@ import Loader from "./Loader";
 import CardSection from "../layouts/MobileLayout/components/CardSection";
 
 import { useSelector } from "react-redux";
-import Statistics from "./Statistics";
+import LineChart from "./LineChart";
+import BarChart from "./BarChart";
 
 const Info = ({ chartHeight = "300px" }) => {
   const {
@@ -20,7 +21,9 @@ const Info = ({ chartHeight = "300px" }) => {
   if (name.toLowerCase() === "perú") lastData = peru;
   else lastData = region;
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <React.Fragment>
       <Typography
         variant="h2"
@@ -34,56 +37,63 @@ const Info = ({ chartHeight = "300px" }) => {
       >
         {name.toUpperCase()}
       </Typography>
-      {loading ? (
-        <Loader />
-      ) : (
-        <React.Fragment>
-          <Grid container style={{ margin: 0, width: "100%" }}>
-            <Grid container item>
-              <CardSection
-                color="#FFF"
-                backgroundColor="#367FB8"
-                sectionTitle="CASOS TOTALES"
-                sectionContent={lastData.totalCases}
-              />
-              <CardSection
-                color="#FFF"
-                backgroundColor="#C85757"
-                sectionTitle="MUERTOS"
-                sectionContent={lastData.totalDeaths}
-              />
-            </Grid>
-            {name.toLowerCase() === "perú" ? (
-              <Grid container item>
-                <CardSection
-                  backgroundColor="#DAA753"
-                  sectionTitle="DESCARTADOS"
-                  sectionContent={lastData.totalDiscarded}
-                />
-                <CardSection
-                  sectionTitle="RECUPERADOS"
-                  sectionContent={lastData.totalRecovered}
-                />
-              </Grid>
-            ) : null}
+      <Grid container style={{ margin: 0, width: "100%" }}>
+        <Grid container item>
+          <CardSection
+            color="#FFF"
+            backgroundColor="#367FB8"
+            sectionTitle="CASOS TOTALES"
+            sectionContent={lastData.totalCases}
+          />
+          <CardSection
+            color="#FFF"
+            backgroundColor="#C85757"
+            sectionTitle="MUERTOS"
+            sectionContent={lastData.totalDeaths}
+          />
+        </Grid>
+        {name.toLowerCase() === "perú" ? (
+          <Grid container item>
+            <CardSection
+              backgroundColor="#DAA753"
+              sectionTitle="DESCARTADOS"
+              sectionContent={lastData.totalDiscarded}
+            />
+            <CardSection
+              sectionTitle="RECUPERADOS"
+              sectionContent={lastData.totalRecovered}
+            />
           </Grid>
-          <div
-            style={{
-              height: chartHeight,
-              paddingBottom: "200px",
-              margin: "10px 30px",
-            }}
-          >
-            <Typography
-              variant="h3"
-              style={{ fontSize: "25px", marginTop: "30px" }}
-            >
-              Evolución:
-            </Typography>
-            <Statistics />
-          </div>
-        </React.Fragment>
-      )}
+        ) : null}
+      </Grid>
+      <div style={{ margin: "0 20px 250px 20px" }}>
+        <Typography
+          variant="h3"
+          style={{ fontSize: "25px", marginTop: "70px" }}
+        >
+          Evolución:
+        </Typography>
+        <div
+          style={{
+            height: chartHeight,
+          }}
+        >
+          <LineChart />
+        </div>
+        <Typography
+          variant="h3"
+          style={{ fontSize: "25px", marginTop: "100px" }}
+        >
+          Casos por día:
+        </Typography>
+        <div
+          style={{
+            height: chartHeight,
+          }}
+        >
+          <BarChart />
+        </div>
+      </div>
     </React.Fragment>
   );
 };

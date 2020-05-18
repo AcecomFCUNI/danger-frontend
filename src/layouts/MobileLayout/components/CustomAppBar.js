@@ -14,7 +14,11 @@ import PeruIcon from "../../../images/peruIcon.png";
 
 import SearchOneRegion from "./SearchOneRegion";
 import { useDispatch } from "react-redux";
-import { searchRegionRequested, handleDrawer } from "../../../actions";
+import {
+  searchRegionRequested,
+  handleDrawer,
+  dataInEachDayRequested,
+} from "../../../actions";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -94,6 +98,7 @@ const CustomAppBar = () => {
             aria-label="mostrar datos totales"
             onClick={() => {
               dispatch(searchRegionRequested("perú"));
+              dispatch(dataInEachDayRequested("perú"));
               dispatch(handleDrawer());
             }}
             color="inherit"
