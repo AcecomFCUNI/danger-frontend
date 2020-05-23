@@ -164,3 +164,8 @@
 - Updated:
   - Added bar charts for cases, deaths, recovered and discarded
   - Added Acecom favicon.
+
+## Version 2.6.1
+
+- Updated:
+  - Source of currentDate was changed.

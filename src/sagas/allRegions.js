@@ -6,12 +6,10 @@ import { addPopulationToData } from "../functions/RegionsPopulation";
 
 function* fetchAllRegions() {
   try {
-    const {
-      message: { currentDate },
-    } = yield call(Get, "/currentDate");
+    const { updatedAt } = yield call(Get, "/");
     const { message } = yield call(Post, "/dataPerDay", {
       args: {
-        date: currentDate,
+        date: updatedAt,
       },
     });
     const regions = addPopulationToData(message.departmentsData.departments);
