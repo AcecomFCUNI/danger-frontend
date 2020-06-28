@@ -169,3 +169,8 @@
 
 - Updated:
   - Source of currentDate was changed.
+
+## Version 2.7.0
+
+- Updated:
+  - Dependencies.
