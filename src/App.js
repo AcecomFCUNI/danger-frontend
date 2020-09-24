@@ -56,7 +56,20 @@ const App = () => {
           <strong>API oficial del Gobierno del Perú</strong> ha sido cerrada.
           <Divider style={{ margin: "10px 0" }} />
           <p>
-            <strong>Source code:</strong> front, back
+            <strong>Source code:</strong>{" "}
+            <Link
+              target="_blank"
+              href="https://github.com/AcecomFCUNI/danger-frontend"
+            >
+              front
+            </Link>
+            ,{" "}
+            <Link
+              target="_blank"
+              href="https://github.com/AcecomFCUNI/danger-backend"
+            >
+              back
+            </Link>
           </p>
           <p>
             <strong>Developers:</strong>{" "}
