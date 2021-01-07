@@ -179,3 +179,8 @@
 
 - Updated:
   - Dependencies.
+
+## Version 2.9.0
+
+- Updated:
+  - Dependencies.
